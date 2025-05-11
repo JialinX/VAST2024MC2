@@ -90,6 +90,44 @@ Optional parameter tweaks (edit inside the script)
 | `COLOR_RANGE`      | Continuous color range for foreground‑ratio heatmap (`[min,max]`) | `[0, 0.4]`   |
 | `FIG_WIDTH/HEIGHT` | Sunburst dimensions in pixels                                | `1200 / 700` |
 
+### 4. Generate Path Map
+
+Run the following command to generate the fishing vessel routes json file first :
+
+```bash
+python extract_vessel_routes.py
+```
+
+Then run the command to generate the path map
+
+```bash
+python visualize_vessel_routes.py
+```
+
+This will:
+- Filter out the other vessels that is not fishing vessel 
+- Generate a Path Map showing all the trajectory and dwell bar graph of the vessels
+- Help identify when the vessel enter the preserve area and which preserve they entered
+
+### 5. Generate Parallel Coordinates
+
+```bash
+python vessel_parallel_coordinates.py
+```
+
+This will:
+- Generate a Parallel Coordinates graph that can interact with
+- Help identify when the vessel enter the preserve area, how long the vessel stay in the preserve and which preserve they entered 
+
+### 6. Generate Vessel Similarity
+
+```bash
+python vessel_similarity.py
+```
+
+- Generate a Bar graph that ranking the vessels based on similarity score, closer to the left means the vessel's behaviour is more suspicious
+
+
 ## Output
 
 ### Dwell Time Plots
@@ -132,6 +170,35 @@ Optional parameter tweaks (edit inside the script)
 * **Features:**
   * Hover to see the value counts of a node(income/outcome) or name of target/source of a link 
   * Dragging the node in the blank area can see the connection more clearly
+
+### Fishing Vessels Path Map
+#### Processed data file
+- Location: `fishing_vessel_routes.json`
+- Format: json file
+- Features:
+  - Only keep the fishing vessels data
+  - Simplify and reconstruct the data structure for easy data load
+
+#### Path Map
+- Location: `fishing_vessel_routes_map.html`
+- Format: Self‑contained HTML (offline; includes folium)
+- Features:
+  - Trajectory of fishing vessels on map
+  - The trajectory is draw on the real geographic location
+  - Color-coded routes and zones with embedded dwell time analysis
+
+### Parallel Coordinates
+- Location: `vessel_parallel_coordinates.html`
+- Format: (offline; includes Plotly JS)
+- Features:
+  - Can adjust the sequence of different dimension without changing the code
+  - Easiler to filter the data based on time and find out the potential result
+
+### Vessel Similarity
+- Location: `vessel_similarity.html`
+- Format: (offline; includes Plotly JS)
+- Features:
+  - Ranking the vessels' similarity score from high to low, vessels with higher score means it is more suspicious
 
 ## Notes
 
