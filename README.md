@@ -16,14 +16,26 @@ Uses four different visualization methods to identify suspicious vessels:
 - Path Map Similarity Analysis
 - Parallel Coordinates Analysis
 
+### 3. Sunburst Chart Analysis
+
+* **Large interactive Plotly Sunburst** (1200 × 700) centred on the page.
+* **Cluster explorer**: search any cluster ID to list underlying cycles and vessels.
+* **Risk table** automatically flags vessels spending > 20 % of total dwell time inside *ecological preserves*.
+* SSE‑specific summaries: vessel list, cycles present in the viz, and each vessel’s cluster lineage.
+* **Debug prints** at each major processing stage for transparent data‑reduction tracing.
+
 ## Requirements
 
-- Python 3.x
+- Python 3.8+
 - Required packages:
   - pandas
   - matplotlib
   - json
   - numpy
+  - networkx
+  - scikit-learn
+  - scipy
+  - plotly
 
 ## Usage
 
@@ -58,6 +70,21 @@ This will:
 - Generate a Venn diagram showing the overlap of suspicious vessels
 - Help identify vessels that are suspicious across multiple analysis methods
 
+### 3. Generate Sunburst Chart 
+
+```bash
+python sunburst.py
+```
+
+Optional parameter tweaks (edit inside the script)
+
+| Variable           | Purpose                                                      | Default      |
+| ------------------ | ------------------------------------------------------------ | ------------ |
+| `MIN_PINGS`        | Minimum pings between *leaving* and *returning* to any port to qualify as a cycle | `3`          |
+| `SAMPLE_CYCLES`    | If not `None`, randomly subsample cycles to this number for faster prototyping | `None`       |
+| `COLOR_RANGE`      | Continuous color range for foreground‑ratio heatmap (`[min,max]`) | `[0, 0.4]`   |
+| `FIG_WIDTH/HEIGHT` | Sunburst dimensions in pixels                                | `1200 / 700` |
+
 ## Output
 
 ### Dwell Time Plots
@@ -74,6 +101,25 @@ This will:
 - Shows the intersection of suspicious vessels identified by different methods
 - Helps identify the most suspicious vessels based on multiple criteria
 
+### Sunburst Chart
+#### Sunburst Visualization
+* **Location:** `sunburst.html`
+* **Format:** Self‑contained HTML (offline; includes Plotly JS)
+* **Features:**
+  * Click‑to‑zoom hierarchical clusters
+  * Colour scale (`RdYlBu_r`) mapped to *fg\_ratio* (0 – 0.4 by default)
+  * Hover tooltip shows both *fg\_ratio* and *ep\_ratio*
+  * Search box under the chart to list vessels & cycles per cluster
+#### Risk Table
+* Automatically flags vessels whose ecological‑preserve dwell ratio exceeds
+  * **≥ 0.4** → *High* risk (red dot)
+  * **0.2 – 0.4** → *Medium* risk (yellow dot)
+* Presented below the chart for quick triage
+#### SSE Fleet Sections
+* **Vessels list** with count
+* **Cycles in visualization** count
+* **Cluster lineages** for every SSE vessel (easily copy‑pastable)
+
 ## Notes
 
 - The analysis focuses on fishing vessels and their activities
@@ -81,3 +127,6 @@ This will:
 - The May 14, 2035 reference line helps identify changes in vessel behavior
 - High-resolution output ensures clear visualization of vessel activities
 - All vessel dwell time plots are automatically saved in the `fishing_vessel_plots` directory
+
+
+
