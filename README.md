@@ -3,7 +3,12 @@
 This project provides tools for analyzing vessel activities and identifying suspicious vessels through multiple visualization methods.
 
 ## Features
-
+### Flow traces cargo journeys from catch regions to export cities using Sankey Diagram
+- Join conditions for generating data -> final_filter.xlsx
+    - Vessel-harbor city visit date - Vessel-region visit date ≤ 6 days
+    - Export transaction date - Vessel-harbor city visit date ≤ 1 day
+- Run sankey_diagram.py to generate the Sankey Diagram
+  
 ### 1. Vessel Dwell Time Analysis
 - Generates individual dwell time distribution graphs for each vessel
 - Shows vessel activities across different locations over time
@@ -119,6 +124,14 @@ Optional parameter tweaks (edit inside the script)
 * **Vessels list** with count
 * **Cycles in visualization** count
 * **Cluster lineages** for every SSE vessel (easily copy‑pastable)
+
+### Sankey Diagram
+#### Sankey Diagram Visualization
+* **Location:** `sankey_diagram.html`
+* **Format:** Self‑contained HTML (offline; includes Plotly JS)
+* **Features:**
+  * Hover to see the value counts of a node(income/outcome) or name of target/source of a link 
+  * Dragging the node in the blank area can see the connection more clearly
 
 ## Notes
 
