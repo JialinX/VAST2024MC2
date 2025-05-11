@@ -38,6 +38,3 @@ ENV/
 
 # Jupyter Notebook
 .ipynb_checkpoints
-
-# data set
-MC2*
